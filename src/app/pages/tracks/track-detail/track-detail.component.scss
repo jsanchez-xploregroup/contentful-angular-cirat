@@ -1,0 +1,49 @@
+@import "~@angular/material/theming";
+@import "../../../../themes.scss";
+
+.track {
+  margin: 1em;
+  display: flex;
+  flex-direction: column;
+  &__name {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  h3 {
+    color: mat-color($my-app-primary);
+    font-style: italic;
+  }
+  span {
+    font-size: 0.8em;
+  }
+
+  hr {
+    background-color: mat-color($my-app-primary);
+  }
+
+  .details {
+    margin: 1em;
+    display: flex;
+    flex-direction: column;
+    mat-icon {
+      color: mat-color($my-app-primary);
+    }
+    .row {
+      display: flex;
+      justify-content: space-between;
+
+      span {
+        display: flex;
+        margin: 0.2em 0 0.2em 0;
+        align-items: center;
+        .odd {
+          margin-left: 0.5em;
+        }
+        .even {
+          margin-right: 0.5em;
+        }
+      }
+    }
+  }
+}
