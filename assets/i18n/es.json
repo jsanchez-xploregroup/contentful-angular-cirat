@@ -1,0 +1,15 @@
+{
+  "track": {
+    "h": "h",
+    "km": "km",
+    "m": "m",
+    "gradient": "Desnivel",
+    "maxAltitude": "Alt. máx",
+    "minAltitude": "Alt. mín",
+    "isCircular": "Circular"
+  },
+  "common": {
+    "yes": "Sí",
+    "no": "No"
+  }
+}
