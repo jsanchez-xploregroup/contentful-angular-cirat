@@ -1,3 +1,11 @@
+name: CI - App
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "app/**"
 jobs:
   build:
     name: Build
