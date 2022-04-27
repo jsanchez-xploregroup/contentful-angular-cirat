@@ -1,10 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { switchMap } from 'rxjs/internal/operators/switchMap';
 import { TracksService } from '../services/tracks.service';
 import * as contentful from 'contentful';
 import { Track } from '../models/track';
-import { Subscription } from 'rxjs/internal/Subscription';
 import { Observable } from 'rxjs';
 import { ContentfulService } from 'src/app/utils/contentful.service';
 import { TranslocoService } from '@ngneat/transloco';
@@ -14,8 +12,7 @@ import { TranslocoService } from '@ngneat/transloco';
   templateUrl: './track-detail.component.html',
   styleUrls: ['./track-detail.component.scss'],
 })
-export class TrackDetailComponent implements OnInit, OnDestroy {
-  subscription!: Subscription;
+export class TrackDetailComponent implements OnInit {
   track$!: Observable<contentful.Entry<Track>>;
 
   constructor(
@@ -29,19 +26,13 @@ export class TrackDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscription = this.route.paramMap.subscribe((params: ParamMap) => {
+    this.route.paramMap.subscribe((params: ParamMap) => {
       const locale = this.transloco.getActiveLang();
       const queryObj = {
         locale,
       };
       this.tracksService.getTrack(params.get('slug') as string, queryObj);
     });
-  }
-
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
   }
 
   goBack(): void {

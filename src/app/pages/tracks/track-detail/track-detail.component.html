@@ -1,7 +1,7 @@
 <div *ngIf="track$ | async as track;">
   <mat-toolbar color="primary">
     <mat-toolbar-row>
-      <button mat-button (click)="goBack()">
+      <button mat-button (click)="goBack()" data-testid="back-button">
         <mat-icon>arrow_back</mat-icon> {{track.fields.name}}
       </button>
     </mat-toolbar-row>
