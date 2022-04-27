@@ -1,25 +1,33 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import {
+  byTestId,
+  createComponentFactory,
+  mockProvider,
+  Spectator,
+} from '@ngneat/spectator';
 import { HeaderComponent } from './header.component';
+import { LanguageService } from './services/language.service';
 
 describe('HeaderComponent', () => {
-  let component: HeaderComponent;
-  let fixture: ComponentFixture<HeaderComponent>;
+  let spectator: Spectator<HeaderComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ HeaderComponent ]
-    })
-    .compileComponents();
+  const createComponent = createComponentFactory({
+    component: HeaderComponent,
+    shallow: true,
+    providers: [mockProvider(LanguageService)],
   });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(HeaderComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  beforeEach(async () => {
+    spectator = createComponent();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(spectator.component).toBeTruthy();
+  });
+
+  it('should behave call changeLang function', () => {
+    spectator.dispatchFakeEvent(byTestId('en-button'), 'click');
+    expect(spectator.inject(LanguageService).changeLang).toHaveBeenCalledWith(
+      'en-US'
+    );
   });
 });
