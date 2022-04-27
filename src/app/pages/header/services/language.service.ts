@@ -16,12 +16,8 @@ export class LanguageService {
 
   changeLang(lang: string) {
     this.subject.next(lang);
-    this.translocoService.setActiveLang(this.sanitizeLang(lang));
+    this.translocoService.setActiveLang(lang);
     localStorage.setItem('lang', lang);
-  }
-
-  sanitizeLang(lang: string) {
-    return lang.split('-')[0];
   }
 
   get lang() {

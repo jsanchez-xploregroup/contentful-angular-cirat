@@ -7,6 +7,7 @@ import { Track } from '../models/track';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { Observable } from 'rxjs';
 import { ContentfulService } from 'src/app/utils/contentful.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-track-detail',
@@ -21,16 +22,19 @@ export class TrackDetailComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private tracksService: TracksService,
-    public contentfulService: ContentfulService
-  ) {}
+    public contentfulService: ContentfulService,
+    private transloco: TranslocoService
+  ) {
+    this.track$ = this.tracksService.track$;
+  }
 
   ngOnInit(): void {
-    this.subscription = this.tracksService.tracks$.subscribe(() => {
-      this.track$ = this.route.paramMap.pipe(
-        switchMap((params: ParamMap) =>
-          this.tracksService.getTrack(params.get('slug') as string)
-        )
-      );
+    this.subscription = this.route.paramMap.subscribe((params: ParamMap) => {
+      const locale = this.transloco.getActiveLang();
+      const queryObj = {
+        locale,
+      };
+      this.tracksService.getTrack(params.get('slug') as string, queryObj);
     });
   }
 

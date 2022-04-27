@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { TranslocoService } from '@ngneat/transloco';
 import * as contentful from 'contentful';
 import { Subscription } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { ContentfulService } from 'src/app/utils/contentful.service';
-import { Store } from 'store';
 import { Track } from './models/track';
 import { TracksService } from './services/tracks.service';
 
@@ -19,12 +19,20 @@ export class TracksComponent implements OnInit, OnDestroy {
   constructor(
     private tracksService: TracksService,
     private contentfulService: ContentfulService,
-    private store: Store
-  ) {}
+    private transloco: TranslocoService
+  ) {
+    this.tracks$ = this.tracksService.tracks$;
+  }
 
   ngOnInit(): void {
-    this.subscription = this.tracksService.tracks$.subscribe();
-    this.tracks$ = this.store.select('tracks');
+    this.subscription = this.transloco.langChanges$.subscribe(
+      (locale: string) => {
+        const queryObj = {
+          locale,
+        };
+        this.tracksService.getTracks(queryObj);
+      }
+    );
   }
 
   getFirstParagraph(richText: unknown): string {

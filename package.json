@@ -7,7 +7,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "config": "ts-node -O '{\"module\": \"commonjs\"}' ./config.index.ts",
-    "build": "npm run config && ng build"
+    "build": "npm run config && ng build",
+    "deploy": "npm run config && ng deploy --base-href=/contentful-angular-cirat/"
   },
   "private": true,
   "dependencies": {
@@ -35,6 +36,7 @@
     "@angular/cli": "~13.3.2",
     "@angular/compiler-cli": "~13.3.0",
     "@angular/localize": "^13.3.4",
+    "@ngneat/spectator": "^10.0.1",
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
     "angular-cli-ghpages": "^1.0.0",

@@ -9,10 +9,8 @@ const envConfigFile = `export const environment = {
   contentTypeIds: {
     track: 'track',
   },
-  translocoFilePath: '/assets/i18n',
-   
-};
-`;
+  translocoFilePath: '/contentful-angular-cirat/assets/i18n',   
+};`;
 
 writeFile(targetPath, envConfigFile, 'utf8', (err) => {
   if (err) {

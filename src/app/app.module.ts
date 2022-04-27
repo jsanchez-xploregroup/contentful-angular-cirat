@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslocoRootModule } from './transloco-root.module';
-import { Store } from 'store';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,7 +16,7 @@ import { Store } from 'store';
     HttpClientModule,
     TranslocoRootModule,
   ],
-  providers: [Store],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
