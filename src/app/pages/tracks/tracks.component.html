@@ -1,11 +1,12 @@
 <app-header></app-header>
 <div class="container">
   <div class="tracks">
-    <mat-card *ngFor="let track of tracks$ | async;let i = index" class="track">
+    <mat-card *ngFor="let track of (tracks$ | async)?.items;let i = index" class="track">
       <mat-card-header class="track__header">
         {{ track.fields.name }}
       </mat-card-header>
-      <img mat-card-image src="{{ track.fields.images[0].fields.imageFile.fields.file.url}}?w=500"
+
+      <img mat-card-image [src]="track.fields.images | getFirstImage:500"
         [routerLink]="['/tracks', track.fields?.slug]">
       <mat-card-content [innerHtml]="getFirstParagraph(track.fields.description)">
       </mat-card-content>

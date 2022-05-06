@@ -1,7 +1,6 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import SwiperCore, { Pagination, Navigation } from 'swiper';
-import * as contentful from 'contentful';
-import { ImageFile } from '../tracks/models/track';
+import { IImages } from 'src/app/integrations/contentful/models/contentful';
 
 SwiperCore.use([Navigation, Pagination]);
 
@@ -20,7 +19,7 @@ export class SliderComponent {
   };
   imageSlides: string[] = [];
 
-  @Input() set slides(slides: contentful.Entry<ImageFile>[]) {
+  @Input() set slides(slides: IImages[]) {
     this.imageSlides = slides.map(
       (slide: any) => `${slide.fields.imageFile.fields.file.url}?w=768`
     );

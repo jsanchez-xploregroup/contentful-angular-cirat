@@ -1,12 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslocoService } from '@ngneat/transloco';
-import * as contentful from 'contentful';
+import { EntryCollection } from 'contentful';
 import { Subscription } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
+import { ITrackFields } from 'src/app/integrations/contentful/models/contentful';
+import { ContentfullContentService } from 'src/app/integrations/contentful/services/contentful-content.service';
 import { ContentfulService } from 'src/app/utils/contentful.service';
-import { Track } from './models/track';
-import { TracksService } from './services/tracks.service';
-
 @Component({
   selector: 'app-tracks',
   templateUrl: './tracks.component.html',
@@ -14,23 +13,24 @@ import { TracksService } from './services/tracks.service';
 })
 export class TracksComponent implements OnInit, OnDestroy {
   subscription!: Subscription;
-  tracks$!: Observable<contentful.Entry<Track>[]>;
+  tracks$!: Observable<EntryCollection<ITrackFields>>;
 
   constructor(
-    private tracksService: TracksService,
+    private contentfulContentService: ContentfullContentService<ITrackFields>,
     private contentfulService: ContentfulService,
     private transloco: TranslocoService
   ) {
-    this.tracks$ = this.tracksService.tracks$;
+    this.tracks$ = this.contentfulContentService.entries$;
   }
 
   ngOnInit(): void {
     this.subscription = this.transloco.langChanges$.subscribe(
       (locale: string) => {
-        const queryObj = {
+        const query = {
+          content_type: 'track',
           locale,
         };
-        this.tracksService.getTracks(queryObj);
+        this.contentfulContentService.getEntries(query);
       }
     );
   }
