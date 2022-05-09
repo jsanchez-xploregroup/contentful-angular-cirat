@@ -6,8 +6,7 @@
         {{ track.fields.name }}
       </mat-card-header>
 
-      <img mat-card-image [src]="track.fields.images | getFirstImage:500"
-        [routerLink]="['/tracks', track.fields?.slug]">
+      <img mat-card-image [src]="track.fields.images | getFirstImage:500" [routerLink]="['/track', track.fields?.slug]">
       <mat-card-content [innerHtml]="getFirstParagraph(track.fields.description)">
       </mat-card-content>
     </mat-card>

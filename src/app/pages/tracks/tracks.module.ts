@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { TracksComponent } from './tracks.component';
-import { TrackDetailComponent } from './track-detail/track-detail.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -11,6 +10,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { HeaderModule } from '../header/header.module';
 import { SliderModule } from '../slider/slider.module';
 import { GetFirstImagePipe } from 'src/app/integrations/contentful/pipes/getcontentfulimage.pipe';
+import { GetEntriesResolver } from 'src/app/integrations/contentful/services/getentries.resolver';
 
 const routes: Routes = [
   {
@@ -19,12 +19,18 @@ const routes: Routes = [
   },
   {
     path: ':slug',
-    component: TrackDetailComponent,
+    loadChildren: () =>
+      import('./components/track-detail/track-detail.module').then(
+        (m) => m.TrackDetailModule
+      ),
+    resolve: {
+      tracks: GetEntriesResolver,
+    },
   },
 ];
 
 @NgModule({
-  declarations: [TracksComponent, TrackDetailComponent, GetFirstImagePipe],
+  declarations: [TracksComponent, GetFirstImagePipe],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
