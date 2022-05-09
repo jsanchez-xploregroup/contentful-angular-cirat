@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
-import { EntryCollection, createClient } from 'contentful';
+import { Inject, Injectable } from '@angular/core';
+import { CDA_CLIENT } from '@core/config/initialicers/app-config.initializer';
+import { ContentfulClientApi, EntryCollection } from 'contentful';
 import { ContentfulQuery } from 'src/app/pages/tracks/models/contentfull-query';
 import { ContentfulClientService } from './contentfulclient.service';
 
@@ -7,9 +8,9 @@ import { ContentfulClientService } from './contentfulclient.service';
   providedIn: 'root',
 })
 export class ContentfullContentService<T> {
-  constructor(private contentfulClientService: ContentfulClientService) {}
+  constructor(@Inject(CDA_CLIENT) private cdaClient: ContentfulClientApi) {}
 
   getEntries(query?: ContentfulQuery): Promise<EntryCollection<T>> {
-    return this.contentfulClientService.cdaClient.getEntries<T>(query);
+    return this.cdaClient.getEntries<T>(query);
   }
 }
